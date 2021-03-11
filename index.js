@@ -1,11 +1,14 @@
 const express = require('express');
+const { WebClient } = require('@slack/web-api');
 const bodyParser = require("body-parser");
 const request = require('request');
 
 const tokens = {
-    'user.read': 'Bearer xoxb-2319467542-1842793841845-E6GwZiCNT3qvHsGfktVa1TJC',
-    'workspace.read': 'Bearer xoxb-2319467542-1842793841845-JlrIkKNKPt2tDt1eDsJFF9tx'
+    'user.read': 'xoxb-2319467542-1842793841845-E6GwZiCNT3qvHsGfktVa1TJC',
+    'workspace.read': 'xoxb-2319467542-1842793841845-JlrIkKNKPt2tDt1eDsJFF9tx'
 }
+
+const web = new WebClient(tokens['user.read']);
 
 const app = express()
 const port = process.env.PORT || 3000;
@@ -14,62 +17,88 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+    res.send('Hello World!')
 })
 
 
 app.post('/bonusly', (req, res) => {
-    console.log(req.body);
+
     const fromUser = req.body.message.user;
-
-    const options = {
-        url: `https://slack.com/api/users.profile.get?user=${fromUser}`,
-        headers: {
-            'Authorization': tokens['workspace.read']
-        }
-    };
-
-    function callback(error, response, body) {
-        if (!error && response.statusCode == 200) {
-            console.log(response);
-            console.log(body);
-            var slackEmail = JSON.parse(body)['profile']['email'];
-            if(slackEmail == 'davidg@surveymonkey.com') {
-                slackEmail = 'dgregory@surveymonkey.com';
-            }
-            findUserInBonusly(slackEmail);
-        }
-        else{
-            console.log(error);
-            response.send(null);
-        }
-    }
+    const daveUser = "";
+    const dhanaUser = "U04A34BSV";
+    (async () => {
+        const username = await web.users.profile.get({
+            username: dhanaUser
+        });
+        console.log(username);
+    })();
 
 
-    function findUserInBonusly(email){
-        const options = {
-            url: `https://bonus.ly/api/v1/users?email=${email}`,
-            headers: {
-                'Authorization': 'Bearer abbfd9c173805a12738a11f521b1a155'
-            }
-        };
+    // console.log(req.body);
+    // const fromUser = req.body.message.user;
 
-        request(options, foundBonuslyUser);     
-    }
+    // const options = {
+    //     url: `https://slack.com/api/users.profile.get?user=${fromUser}`,
+    //     headers: {
+    //         'Authorization': tokens['workspace.read']
+    //     }
+    // };
 
-    function foundBonuslyUser(error, response, body){
-        if (!error && response.statusCode == 200) {
-            const bonuslyUser = JSON.parse(body);
-            console.log(bonuslyUser.result[0]['email']);
-            response.send("boo");
-        }
-        else{
-            console.log(error);
-            response.send(null);
-        }
-    }
+    // function callback(error, response, body) {
+    //     if (!error && response.statusCode == 200) {
+    //         console.log(response);
+    //         console.log(body);
+    //         var slackEmail = JSON.parse(body)['profile']['email'];
+    //         if(slackEmail == 'davidg@surveymonkey.com') {
+    //             slackEmail = 'dgregory@surveymonkey.com';
+    //         }
+    //         findUserInBonusly(slackEmail);
+    //     }
+    //     else{
+    //         console.log(error);
+    //         response.send(null);
+    //     }
+    // }
 
-    request(options, callback);
+
+    // function findUserInBonusly(email){
+    //     const options = {
+    //         url: `https://bonus.ly/api/v1/users?email=${email}`,
+    //         headers: {
+    //             'Authorization': 'Bearer abbfd9c173805a12738a11f521b1a155'
+    //         }
+    //     };
+
+    //     request(options, foundBonuslyUser);     
+    // }
+
+    // function giveBonus(username) {
+    //     const options = {
+    //         url: `https://bonus.ly/api/v1/bonuses`,
+    //         headers: {
+    //             'Authorization': 'Bearer abbfd9c173805a12738a11f521b1a155'
+    //         },
+    //         body: {
+    //             "reason": `+0 @${username} #trusttheteam`,
+    //         }
+    //     };
+
+    //     request.post(options)
+    // }
+
+    // function foundBonuslyUser(error, response, body){
+    //     if (!error && response.statusCode == 200) {
+    //         const bonuslyUser = JSON.parse(body);
+    //         console.log(bonuslyUser.result[0]['username']);
+    //         giveBonus(bonuslyUser.result[0]['username'])
+    //     }
+    //     else{
+    //         console.log(error);
+    //         response.send(null);
+    //     }
+    // }
+
+    // request(options, callback);
 })
 
 
