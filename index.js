@@ -94,6 +94,8 @@ app.post('/bonusly', (req, res) => {
 
     function foundBonuslyUser(error, response, body) {
         if (!error && response.statusCode == 200) {
+            console.log(body);
+            console.log(JSON.parse(body));
             const bonuslyUser = JSON.parse(body);
             console.log(bonuslyUser.result[0]['username']);
             // giveBonus(bonuslyUser.result[0]['username'])
