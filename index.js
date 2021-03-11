@@ -30,7 +30,7 @@ app.post('/bonusly', (req, res) => {
             parsedUser = req.body.payload.user;
         }
 
-        const user = await slackWeb.users.profile.get({
+        const user = await userWeb.users.profile.get({
             username: parsedUser.username
         });
         
