@@ -53,7 +53,6 @@ app.post('/bonusly', (req, res) => {
             }
             else{
                 console.log(error);
-                res.send("boo2");
             }
         }
 
@@ -77,7 +76,6 @@ app.post('/bonusly', (req, res) => {
         }
         findUserInBonusly(slackEmail);
         */
-        res.send("ttt");
     })();
 
 
@@ -87,7 +85,7 @@ app.post('/bonusly', (req, res) => {
     // console.log(req.body);
     // const fromUser = req.body.message.user;
 
-   
+
 
     function findUserInBonusly(email) {
         const options = {
@@ -123,7 +121,7 @@ app.post('/bonusly', (req, res) => {
             console.log("=====RESPONSE======")
             console.log(response)
 
-            res.end();
+            res.sendStatus(200);
         }
         else {
             console.log(error);
@@ -137,5 +135,5 @@ app.post('/bonusly', (req, res) => {
 
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+    console.log(`Example app listening at http://localhost:${port}`)
 })
