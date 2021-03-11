@@ -15,41 +15,41 @@ app.get('/', (req, res) => {
 
 
 app.post('/bonusly', (req, res) => {
- 	console.log(req.body);
- 	const fromUser = req.body.message.user;
+    console.log(req.body);
+    const fromUser = req.body.message.user;
 
- 	const options = {
-  		url: `https://slack.com/api/users.profile.get?user=${fromUser}`,
-  		headers: {
-    		'Authorization': 'Bearer xoxb-2319467542-1842793841845-E6GwZiCNT3qvHsGfktVa1TJC'
-  		}
-	};
+    const options = {
+        url: `https://slack.com/api/users.profile.get?user=${fromUser}`,
+        headers: {
+            'Authorization': 'Bearer xoxb-2319467542-1842793841845-E6GwZiCNT3qvHsGfktVa1TJC'
+        }
+    };
 
-	function callback(error, response, body) {
-		if (!error && response.statusCode == 200) {
-	    	console.log(response);
-	    	console.log(body);
-	    	findUserInBonusly(body['profile']['email'])
-	  	}
-	  	else{
-	  		console.log(error);
-	  		response.send(null);
-	  	}
-	}
+    function callback(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(response);
+            console.log(body);
+            findUserInBonusly(body['profile']['email'])
+        }
+        else{
+            console.log(error);
+            response.send(null);
+        }
+    }
 
 
-	function findUserInBonusly(email){
-		const options = {
-  		url: `https://bonus.ly/api/v1/users?email?=${email}`,
-  		headers: {
-    		'Authorization': 'Bearer xoxb-2319467542-1842793841845-E6GwZiCNT3qvHsGfktVa1TJC'
-  		}
-	};
+    function findUserInBonusly(email){
+        const options = {
+            url: `https://bonus.ly/api/v1/users?email?=${email}`,
+            headers: {
+                'Authorization': 'abbfd9c173805a12738a11f521b1a155'
+            }
+    };
 
-		
-	}
+        
+    }
 
-	request(options, callback);
+    request(options, callback);
 })
 
 
