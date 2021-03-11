@@ -14,7 +14,6 @@ app.get('/', (req, res) => {
 
 
 app.post('/bonusly', (req, res) => {
-	debugger;
  	console.log(req.body);
     res.json(req.body);
 })
