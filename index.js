@@ -20,8 +20,6 @@ app.get('/', (req, res) => {
 
 
 app.post('/bonusly', (req, res) => {
-    res.status(200).send("");
-    return res.status(200).send("");
     (async () => {
         let payload = req.body.payload;
         let parsedUser = null;
@@ -123,12 +121,10 @@ app.post('/bonusly', (req, res) => {
             // console.log(res)
             // console.log("=====RESPONSE======")
             // console.log(response)
-            console.log(res.status(200).send(""))
-
         }
         else {
             console.log(error);
-            res.send("boo2");
+            return res.status(400).send({ "status": "error" })
         }
     }
 
