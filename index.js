@@ -21,12 +21,13 @@ app.get('/', (req, res) => {
 app.post('/bonusly', (req, res) => {
     (async () => {
         let payload = req.body.payload;
+        let parsedUser = null;
 
         if (typeof(payload) === 'string'){
-            const parsedUser = JSON.parse(req.body.payload).user;
+            parsedUser = JSON.parse(req.body.payload).user;
         }
         else{
-            const parsedUser = req.body.payload.user;
+            parsedUser = req.body.payload.user;
         }
 
         console.log(parsedUser, typeof(parsedUser));
