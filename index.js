@@ -1,6 +1,12 @@
-const express = require('express')
+const express = require('express');
+const bodyParser = require("body-parser");
+
+
 const app = express()
 const port = process.env.PORT || 3000;
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
@@ -8,11 +14,9 @@ app.get('/', (req, res) => {
 
 
 app.post('/bonusly', (req, res) => {
-    response = {
-    	payload: req
-    };
-    console.log(response);
-    res.end(JSON.stringify(response));
+	debugger;
+ 	console.log(req.body);
+    res.json(req.body);
 })
 
 
