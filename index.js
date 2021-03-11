@@ -5,10 +5,12 @@ const request = require('request');
 
 const tokens = {
     'user.read': 'xoxb-2319467542-1842793841845-E6GwZiCNT3qvHsGfktVa1TJC',
-    'workspace.read': 'xoxb-2319467542-1842793841845-JlrIkKNKPt2tDt1eDsJFF9tx'
+    'workspace.read': 'xoxb-2319467542-1842793841845-JlrIkKNKPt2tDt1eDsJFF9tx',
+    'userToken': 'xoxp-2319467542-4343147913-1861767808529-0816f68513581eaf109ff709c0682fee',
+    'botToken': 'xoxb-2319467542-1842793841845-xGoHB404UWQFCt1bs9J8JJBR'
 }
 
-const web = new WebClient(tokens['user.read']);
+const web = new WebClient(tokens['userToken']);
 
 const app = express()
 const port = process.env.PORT || 3000;
@@ -27,11 +29,20 @@ app.post('/bonusly', (req, res) => {
     const daveUser = "";
     const dhanaUser = "U04A34BSV";
     (async () => {
-        const username = await web.users.profile.get({
+        const user = await web.users.profile.get({
             username: dhanaUser
         });
-        console.log(username);
+        console.log(user);
+
+        var slackEmail = user.profile.email;
+        if (slackEmail == 'davidg@surveymonkey.com') {
+            slackEmail = 'dgregory@surveymonkey.com';
+        }
+        findUserInBonusly(slackEmail);
     })();
+
+
+
 
 
     // console.log(req.body);
@@ -61,16 +72,16 @@ app.post('/bonusly', (req, res) => {
     // }
 
 
-    // function findUserInBonusly(email){
-    //     const options = {
-    //         url: `https://bonus.ly/api/v1/users?email=${email}`,
-    //         headers: {
-    //             'Authorization': 'Bearer abbfd9c173805a12738a11f521b1a155'
-    //         }
-    //     };
+    function findUserInBonusly(email) {
+        const options = {
+            url: `https://bonus.ly/api/v1/users?email=${email}`,
+            headers: {
+                'Authorization': 'Bearer abbfd9c173805a12738a11f521b1a155'
+            }
+        };
 
-    //     request(options, foundBonuslyUser);     
-    // }
+        request(options, foundBonuslyUser);
+    }
 
     // function giveBonus(username) {
     //     const options = {
@@ -86,17 +97,17 @@ app.post('/bonusly', (req, res) => {
     //     request.post(options)
     // }
 
-    // function foundBonuslyUser(error, response, body){
-    //     if (!error && response.statusCode == 200) {
-    //         const bonuslyUser = JSON.parse(body);
-    //         console.log(bonuslyUser.result[0]['username']);
-    //         giveBonus(bonuslyUser.result[0]['username'])
-    //     }
-    //     else{
-    //         console.log(error);
-    //         response.send(null);
-    //     }
-    // }
+    function foundBonuslyUser(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            const bonuslyUser = JSON.parse(body);
+            console.log(bonuslyUser.result[0]['username']);
+            // giveBonus(bonuslyUser.result[0]['username'])
+        }
+        else {
+            console.log(error);
+            response.send(null);
+        }
+    }
 
     // request(options, callback);
 })
