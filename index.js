@@ -30,6 +30,8 @@ app.post('/bonusly', (req, res) => {
             parsedUser = req.body.payload.message.user;
         }
 
+        console.log(req.body.payload);
+
 
 
         const user = await userWeb.users.profile.get({
