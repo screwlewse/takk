@@ -118,7 +118,12 @@ app.post('/bonusly', (req, res) => {
         if (!error && response.statusCode == 200) {
             console.log("foundBonuslyUser", body, typeof(body));
             // giveBonus(bonuslyUser.result[0]['username'])
-            res.sendStatus(200);
+            console.log("=====RES======")
+            console.log(res)
+            console.log("=====RESPONSE======")
+            console.log(response)
+
+            res.end();
         }
         else {
             console.log(error);
