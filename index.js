@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 
 app.post('/bonusly', (req, res) => {
 	console.log(req);
-    res.json(req);
+    res.send("got the post");
 })
 
 
