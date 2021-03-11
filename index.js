@@ -20,11 +20,12 @@ app.get('/', (req, res) => {
 
 app.post('/bonusly', (req, res) => {
     (async () => {
+        console.log(req);
         const user = await slackWeb.users.profile.get({
             username: req.body.user.username
         });
         
-        console.log("boo", user, typeof(user));
+        //console.log("boo", user, typeof(user));
         const parsedUser = JSON.parse(user);
 
         var slackEmail = parsedUser.profile.email;
