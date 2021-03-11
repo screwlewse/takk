@@ -29,11 +29,11 @@ app.post('/bonusly', (req, res) => {
         });
         console.log(user);
 
-        var slackEmail = JSON.parse(user.profile.email);
+        var slackEmail = JSON.parse(user).profile.email;
         if (slackEmail == 'davidg@surveymonkey.com') {
             slackEmail = 'dgregory@surveymonkey.com';
         }
-        findUserInBonusly(slackEmail);
+        //findUserInBonusly(slackEmail);
     })();
 
 
