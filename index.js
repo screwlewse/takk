@@ -76,6 +76,7 @@ app.post('/bonusly', (req, res) => {
         }
         findUserInBonusly(slackEmail);
         */
+        res.status(200).send("");
     })();
 
 
@@ -122,7 +123,6 @@ app.post('/bonusly', (req, res) => {
             // console.log(response)
             console.log(res.status(200).send(""))
 
-            res.status(200).send("");
         }
         else {
             console.log(error);
