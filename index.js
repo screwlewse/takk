@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 })
 
 
-app.post('/bonusly', (req, res) => {ß
+app.post('/bonusly', (req, res) => {
     (async () => {
         const user = await slackWeb.users.profile.get({
             username: req.body.user.username
