@@ -48,8 +48,7 @@ app.post('/bonusly', (req, res) => {
                 if(slackEmail == 'davidg@surveymonkey.com') {
                     slackEmail = 'dgregory@surveymonkey.com';
                 }
-                res.send("boo");
-                //findUserInBonusly(slackEmail);
+                findUserInBonusly(slackEmail);
             }
             else{
                 console.log(error);
@@ -93,7 +92,7 @@ app.post('/bonusly', (req, res) => {
         const options = {
             url: `https://bonus.ly/api/v1/users?email=${email}`,
             headers: {
-                'Authorization': 'Bearer abbfd9c173805a12738a11f521b1a155'
+                'Authorization': 'Bearer ' + process.env.SLACK_BOT_TOKEN
             }
         };
         console.log("email in findUserInBonusly", email);
