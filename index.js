@@ -29,6 +29,7 @@ app.post('/bonusly', (req, res) => {
         else{
             parsedUser = req.body.payload.message.user;
         }
+        console.log(payload, parsedUser);
 
         const url = `https://slack.com/api/users.profile.get?user=${parsedUser.id}`;
         console.info(url);
