@@ -30,10 +30,32 @@ app.post('/bonusly', (req, res) => {
             parsedUser = req.body.payload.message.user;
         }
 
-        console.log(req.body.payload);
+        const options = {
+            url: `https://slack.com/api/users.profile.get?user=${parsedUser.id}`,
+            headers: { 
+                'Authorization': 'Bearer ' + process.env.SLACK_BOT_TOKEN
+            }
+        };
 
+        function callback(error, response, body) {
+            if (!error && response.statusCode == 200) {
+                console.log("callback", body, typeof(body));
+                var slackEmail = JSON.parse(body)['profile']['email'];
+                if(slackEmail == 'davidg@surveymonkey.com') {
+                    slackEmail = 'dgregory@surveymonkey.com';
+                }
+                res.send("boo");
+                //findUserInBonusly(slackEmail);
+            }
+            else{
+                console.log(error);
+                res.send("boo2");
+            }
+        }
 
+        request(options, callback);
 
+        /*
         const user = await userWeb.users.profile.get({
             id: parsedUser.user
         });
@@ -44,7 +66,7 @@ app.post('/bonusly', (req, res) => {
         });
         
         console.log("user2", user2, typeof(user2));
-        /*
+        
         var slackEmail = user.profile.email;
         if (slackEmail == 'davidg@surveymonkey.com') {
             slackEmail = 'dgregory@surveymonkey.com';
@@ -61,29 +83,7 @@ app.post('/bonusly', (req, res) => {
     // console.log(req.body);
     // const fromUser = req.body.message.user;
 
-    // const options = {
-    //     url: `https://slack.com/api/users.profile.get?user=${fromUser}`,
-    //     headers: {
-    //         'Authorization': tokens['workspace.read']
-    //     }
-    // };
-
-    // function callback(error, response, body) {
-    //     if (!error && response.statusCode == 200) {
-    //         console.log(response);
-    //         console.log(body);
-    //         var slackEmail = JSON.parse(body)['profile']['email'];
-    //         if(slackEmail == 'davidg@surveymonkey.com') {
-    //             slackEmail = 'dgregory@surveymonkey.com';
-    //         }
-    //         findUserInBonusly(slackEmail);
-    //     }
-    //     else{
-    //         console.log(error);
-    //         response.send(null);
-    //     }
-    // }
-
+   
 
     function findUserInBonusly(email) {
         const options = {
