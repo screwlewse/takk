@@ -20,11 +20,6 @@ app.get('/', (req, res) => {
 
 app.post('/bonusly', (req, res) => {
     (async () => {
-        console.log("=====req.body=====");
-        console.log(req.body, typeof(req.body));
-        console.log("=====payload=====");
-        console.log(req.body.payload, typeof(req.body.payload));
-
         let payload = req.body.payload;
 
         if (typeof(payload) === 'string'){
@@ -34,21 +29,21 @@ app.post('/bonusly', (req, res) => {
             const parsedUser = req.body.payload.user;
         }
 
+        console.log(parsedUser, typeof(parsedUser));
+
         const user = await slackWeb.users.profile.get({
             username: parsedUser.username
         });
 
-        console.log("=====USER=====");
-        console.log(user);
-        
-        //console.log("boo", user, typeof(user));
-        const parsedUser = JSON.parse(user);
-
+        res.send("boo");
+        /*
         var slackEmail = parsedUser.profile.email;
         if (slackEmail == 'davidg@surveymonkey.com') {
             slackEmail = 'dgregory@surveymonkey.com';
         }
         //findUserInBonusly(slackEmail);
+        */
+
     })();
 
 
