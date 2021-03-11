@@ -19,7 +19,8 @@ app.get('/', (req, res) => {
 
 app.post('/bonusly', (req, res) => {
 
-    const fromUser = req.body.message.user;
+    // const fromUser = req.body.message.user;
+    console.log(req.body)
     const daveUser = "";
     const dhanaUser = "U04A34BSV";
     (async () => {
