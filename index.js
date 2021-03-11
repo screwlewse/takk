@@ -3,14 +3,8 @@ const { WebClient } = require('@slack/web-api');
 const bodyParser = require("body-parser");
 const request = require('request');
 
-const tokens = {
-    'user.read': 'xoxb-2319467542-1842793841845-E6GwZiCNT3qvHsGfktVa1TJC',
-    'workspace.read': 'xoxb-2319467542-1842793841845-JlrIkKNKPt2tDt1eDsJFF9tx',
-    'userToken': 'xoxp-2319467542-4343147913-1861767808529-0816f68513581eaf109ff709c0682fee',
-    'botToken': 'xoxb-2319467542-1842793841845-xGoHB404UWQFCt1bs9J8JJBR'
-}
+const slackWeb = new WebClient(process.env.SLACK_TOKEN);
 
-const web = new WebClient(tokens['userToken']);
 
 const app = express()
 const port = process.env.PORT || 3000;
@@ -29,7 +23,7 @@ app.post('/bonusly', (req, res) => {
     const daveUser = "";
     const dhanaUser = "U04A34BSV";
     (async () => {
-        const user = await web.users.profile.get({
+        const user = await slackWeb.users.profile.get({
             username: dhanaUser
         });
         console.log(user);
