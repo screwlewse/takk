@@ -25,8 +25,6 @@ app.post('/bonusly', (req, res) => {
         console.log("=====payload=====");
         console.log(req.body.payload, typeof(req.body.payload));
 
-        console.log("=====user=====");
-        console.log(req.body.payload.user, typeof(req.body.payload.user));
         let payload = req.body.payload;
 
         if (typeof(payload) === 'string'){
