@@ -30,8 +30,11 @@ app.post('/bonusly', (req, res) => {
             parsedUser = req.body.payload.message.user;
         }
 
+        const url = `https://slack.com/api/users.profile.get?user=${parsedUser.id}`;
+        console.info(url);
+
         const options = {
-            url: `https://slack.com/api/users.profile.get?user=${parsedUser.id}`,
+            url: url,
             headers: { 
                 'Authorization': 'Bearer ' + process.env.SLACK_BOT_TOKEN
             }
