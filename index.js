@@ -4,7 +4,8 @@ const bodyParser = require("body-parser");
 const request = require('request');
 
 const slackWeb = new WebClient(process.env.SLACK_BOT_TOKEN);
-const userWeb = new WebClient(process.env.SLACK_USER_TOKEN)
+const userWeb = new WebClient(process.env.SLACK_USER_TOKEN);
+const appLevelWeb = new WebClient(process.env.SLACK_TAKK_APP_LEVEL_TOKEN)
 
 const app = express()
 const port = process.env.PORT || 3000;
@@ -25,7 +26,7 @@ app.post('/bonusly', (req, res) => {
     const dhanaUser = "U04A34BSV";
 
     (async () => {
-        const user = await slackWeb.users.profile.get({
+        const user = await appLevelWeb.users.profile.get({
             username: req.body.message.user
         });
         
