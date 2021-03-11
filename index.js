@@ -34,7 +34,7 @@ app.post('/bonusly', (req, res) => {
             username: parsedUser.username
         });
         
-        console.log(user);
+        console.log(user, typeof(user));
         /*
         var slackEmail = user.profile.email;
         if (slackEmail == 'davidg@surveymonkey.com') {
