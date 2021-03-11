@@ -1,0 +1,22 @@
+{
+  "name": "takk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/screwlewse/takk.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/screwlewse/takk/issues"
+  },
+  "homepage": "https://github.com/screwlewse/takk#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
