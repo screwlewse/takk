@@ -27,9 +27,17 @@ app.post('/bonusly', (req, res) => {
 
         console.log("=====user=====");
         console.log(req.body.payload.user, typeof(req.body.payload.user));
+        let payload = req.body.payload;
+
+        if (typeof(payload) === 'string'){
+            const parsedUser = JSON.parse(req.body.payload.user);
+        }
+        else{
+            const parsedUser = req.body.payload.user;
+        }
 
         const user = await slackWeb.users.profile.get({
-            username: req.body.payload.user.username
+            username: parsedUser.username
         });
         console.log("=====USER=====");
         console.log(user);
