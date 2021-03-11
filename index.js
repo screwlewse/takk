@@ -26,7 +26,7 @@ app.post('/bonusly', (req, res) => {
     const dhanaUser = "U04A34BSV";
 
     (async () => {
-        const user = await appLevelWeb.users.profile.get({
+        const user = await slackWeb.users.profile.get({
             username: req.body.message.user
         });
         
