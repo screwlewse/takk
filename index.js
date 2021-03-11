@@ -5,7 +5,8 @@ const request = require('request');
 
 const slackWeb = new WebClient(process.env.SLACK_BOT_TOKEN);
 const userWeb = new WebClient(process.env.SLACK_USER_TOKEN);
-const appLevelWeb = new WebClient(process.env.SLACK_TAKK_APP_LEVEL_TOKEN)
+const appLevelWeb = new WebClient(process.env.SLACK_TAKK_APP_LEVEL_TOKEN);
+const bonuslyApiToken = process.env.BONUSLY_API_TOKEN;
 
 const app = express()
 const port = process.env.PORT || 3000;
@@ -92,7 +93,7 @@ app.post('/bonusly', (req, res) => {
         const options = {
             url: `https://bonus.ly/api/v1/users?email=${email}`,
             headers: {
-                'Authorization': 'Bearer ' + process.env.SLACK_BOT_TOKEN
+                'Authorization': 'Bearer ' + bonuslyApiToken
             }
         };
         console.log("email in findUserInBonusly", email);
