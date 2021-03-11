@@ -3,8 +3,8 @@ const { WebClient } = require('@slack/web-api');
 const bodyParser = require("body-parser");
 const request = require('request');
 
-const slackWeb = new WebClient(process.env.SLACK_TOKEN);
-
+const slackWeb = new WebClient(process.env.SLACK_BOT_TOKEN);
+const userWeb = new WebClient(process.env.SLACK_USER_TOKEN)
 
 const app = express()
 const port = process.env.PORT || 3000;
