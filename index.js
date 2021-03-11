@@ -33,14 +33,16 @@ app.post('/bonusly', (req, res) => {
         const user = await slackWeb.users.profile.get({
             username: parsedUser.username
         });
-
         
-        var slackEmail = parsedUser.profile.email;
+        console.log(user);
+        /*
+        var slackEmail = user.profile.email;
         if (slackEmail == 'davidg@surveymonkey.com') {
             slackEmail = 'dgregory@surveymonkey.com';
         }
         findUserInBonusly(slackEmail);
-
+        */
+        res.send(0);
     })();
 
 
