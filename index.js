@@ -8,7 +8,10 @@ app.get('/', (req, res) => {
 
 
 app.post('/bonusly', (req, res) => {
-   res.json({a: req.body});
+	console.log(req);
+	console.log(req.body);
+	console.log(req.body.payload);
+    res.json(req.body.payload);
 })
 
 
