@@ -97,7 +97,7 @@ app.post('/bonusly', (req, res) => {
             console.log(body);
             console.log(JSON.parse(body));
             const bonuslyUser = JSON.parse(body);
-            console.log(bonuslyUser.result[0]['username']);
+            //console.log(bonuslyUser.result[0]['username']);
             // giveBonus(bonuslyUser.result[0]['username'])
         }
         else {
