@@ -74,7 +74,7 @@ app.post('/bonusly', (req, res) => {
                 'Authorization': 'Bearer abbfd9c173805a12738a11f521b1a155'
             }
         };
-
+        console.log("email in findUserInBonusly", email);
         request(options, foundBonuslyUser);
     }
 
@@ -94,12 +94,13 @@ app.post('/bonusly', (req, res) => {
 
     function foundBonuslyUser(error, response, body) {
         if (!error && response.statusCode == 200) {
-            console.log("foundBonuslyUser");
-            console.log(body);
-            console.log(JSON.parse(body));
-            const bonuslyUser = JSON.parse(body);
+            console.log("foundBonuslyUser", response, body);
+            //console.log(body);
+            //console.log(JSON.parse(body));
+            //const bonuslyUser = JSON.parse(body);
             //console.log(bonuslyUser.result[0]['username']);
             // giveBonus(bonuslyUser.result[0]['username'])
+            response.send(null);
         }
         else {
             console.log(error);
