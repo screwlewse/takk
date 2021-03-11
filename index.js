@@ -20,6 +20,8 @@ app.get('/', (req, res) => {
 
 
 app.post('/bonusly', (req, res) => {
+    res.status(200).send("");
+    return res.status(200).send("");
     (async () => {
         let payload = req.body.payload;
         let parsedUser = null;
