@@ -8,7 +8,11 @@ app.get('/', (req, res) => {
 
 
 app.post('/bonusly', (req, res) => {
-    res.send("got the post");
+    response = {
+    	payload: req.body.payload
+    };
+    console.log(response);
+    res.end(JSON.stringify(response));
 })
 
 
