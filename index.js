@@ -27,8 +27,7 @@ app.post('/bonusly', (req, res) => {
 
         if (typeof(payload) === 'string'){
             parsedUser = JSON.parse(req.body.payload).message.user;
-        }
-        else{
+        } else {
             parsedUser = req.body.payload.message.user;
         }
         console.log(payload, parsedUser);
@@ -62,15 +61,35 @@ app.post('/bonusly', (req, res) => {
     })();
 
     function findUserInBonusly(email) {
-        const options = {
-            url: `https://bonus.ly/api/v1/users?email=${email}`,
-            headers: {
-                'Authorization': 'Bearer ' + bonuslyApiToken
-            }
-        };
         console.log("email in findUserInBonusly", email);
-        request(options, foundBonuslyUser);
+        axios.get(
+            `https://bonus.ly/api/v1/users?email=${email}`,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + bonuslyApiToken
+                }
+            }
+        )
+            .then(function (response) {
+                let parsedData = makeDataParseable(response.data)
+                // giveBonus(data.result[0]['username']);
+            })
+            .catch(function (error) {
+                console.log(error);
+                return res.status(400).send({ "status": "error", "data": error })
+            })
     }
+
+    // function findUserInBonusly(email) {
+    //     const options = {
+    //         url: `https://bonus.ly/api/v1/users?email=${email}`,
+    //         headers: {
+    //             'Authorization': 'Bearer ' + bonuslyApiToken
+    //         }
+    //     };
+    //     console.log("email in findUserInBonusly", email);
+    //     request(options, foundBonuslyUser);
+    // }
 
     function giveBonus(username) {
         axios.post(
@@ -91,16 +110,23 @@ app.post('/bonusly', (req, res) => {
             });
     }
 
-    function foundBonuslyUser(error, response, body) {
-        if (!error && response.statusCode == 200) {
-            console.log("foundBonuslyUser", body, typeof (body));
-            giveBonus(JSON.parse(body).result[0]['username']);
+    // function foundBonuslyUser(error, response, body) {
+    //     if (!error && response.statusCode == 200) {
+    //         console.log("foundBonuslyUser", body, typeof (body));
+    //         giveBonus(JSON.parse(body).result[0]['username']);
+    //     }
+    //     else {
+    //         console.log(error);
+    //         return res.status(400).send({ "status": "error" })
+    //     }
+    // }
+    makeDataParseable(data) {
+        if (typeof (data) == "string") {
+            return JSON.parse(data);
+        } else {
+            return data;
         }
-        else {
-            console.log(error);
-            return res.status(400).send({ "status": "error" })
-        }
-    }
+    };
 
 })
 
