@@ -28,9 +28,7 @@ app.post('/bonusly', (req, res) => {
         const ts = payload.message_ts || null;
         const channel = payload.channel.id;
         getParentMessage(ts, channel, function (parentMessage) {
-            console.log("=====PARENTMESSAGE=====");
-            console.log(parentMessage.latest, "&&&&&", parentMessage.messages[0]);
-            // postAQuestion(parentMessage);
+            postAQuestion(parentMessage);
         });
     }
 
@@ -98,11 +96,10 @@ app.post('/bonusly', (req, res) => {
 
     function postAQuestion(parentMessage) {
         // console.log("POSTAQUESTION: ", parentMessage, typeof (parentMessage))
-        // title: parentMessage.messages[0].text,
-        // body: parentMessage.messages[0].text,
+
         const dataObject = {
-            title: "test title",
-            body: "test body",
+            title: parentMessage.messages[0].text,
+            body: parentMessage.messages[0].text,
             type: "question",
             headers: {
                 'Authorization': 'Bearer ' + schooldApiToken
