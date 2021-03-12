@@ -28,7 +28,9 @@ app.post('/bonusly', (req, res) => {
         const ts = payload.message_ts || null;
         const channel = payload.channel.id;
         getParentMessage(ts, channel, function (parentMessage) {
-            postAQuestion(parentMessage);
+            console.log("=====PARENTMESSAGE=====");
+            console.log(parentMessage.latest, "&&&&&", parentMessage.messages);
+            // postAQuestion(parentMessage);
         });
     }
 
@@ -130,9 +132,9 @@ app.post('/bonusly', (req, res) => {
             }
         )
             .then(function (response) {
-                console.log("GETPARENTMESSAGE", response.data, typeof (response.data));
-                console.log("=====================");
-                console.log("GETPARENTMESSAGE:PARSED", makeDataParseable(response.data), typeof (makeDataParseable(response.data)));
+                // console.log("GETPARENTMESSAGE", response.data, typeof (response.data));
+                // console.log("=====================");
+                // console.log("GETPARENTMESSAGE:PARSED", makeDataParseable(response.data), typeof (makeDataParseable(response.data)));
                 cb(makeDataParseable(response.data));
             })
             .catch(function (error) {
