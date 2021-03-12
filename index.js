@@ -21,6 +21,7 @@ app.get('/', (req, res) => {
 
 app.post('/bonusly', (req, res) => {
     let payload = req.body.payload;
+    console.log(payload);
     let parsedUser = makeDataParseable(payload).message.user;
 
     axios.get(
@@ -84,6 +85,10 @@ app.post('/bonusly', (req, res) => {
                 console.log(error);
             });
     };
+
+    function poseAQuestion() {
+
+    }
 
     function makeDataParseable(data) {
         if (typeof (data) == "string") {
