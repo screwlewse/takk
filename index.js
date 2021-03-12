@@ -2,6 +2,7 @@ const express = require('express');
 const { WebClient } = require('@slack/web-api');
 const bodyParser = require("body-parser");
 const request = require('request');
+const axios = require('axios');
 
 const slackWeb = new WebClient(process.env.SLACK_BOT_TOKEN);
 const userWeb = new WebClient(process.env.SLACK_USER_TOKEN);
@@ -72,16 +73,24 @@ app.post('/bonusly', (req, res) => {
     }
 
     function giveBonus(username) {
-        const options = {
-            url: `https://bonus.ly/api/v1/bonuses`,
-            headers: {
-                'Authorization': 'Bearer ' + bonuslyApiToken
+        axios.post(
+            'https://bonus.ly/api/v1/bonuses',
+            {
+                body: {
+                    "reason": `+1 @${username} You're answer was top notch!  #makeithappen ![](https://bonusly-fog.s3.amazonaws.com/uploads/bonus_image/image/604ab409133ba30083fdff2e/EVUhyo0WAAMfcrN.jpg)`
+                }
             },
-            body: {
-                "reason": `+1 @${username} You're answer was top notch!  #makeithappen ![](https://bonusly-fog.s3.amazonaws.com/uploads/bonus_image/image/604ab409133ba30083fdff2e/EVUhyo0WAAMfcrN.jpg)`
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + bonuslyApiToken
+                }
             }
-        };
-        request.post(options)
+        )
+            .then((response) => {
+                console.log(response);
+            }, (error) => {
+                console.log(error);
+            });
     }
 
     function foundBonuslyUser(error, response, body) {
