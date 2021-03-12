@@ -97,14 +97,13 @@ app.post('/bonusly', (req, res) => {
     function postAQuestion(parentMessage) {
         // console.log("POSTAQUESTION: ", parentMessage, typeof (parentMessage))
 
-        const dataObject = {
-            title: parentMessage.messages[0].text,
-            body: parentMessage.messages[0].text,
-            type: "question"
-        };
         axios.post(
             `https://takk-schoold.herokuapp.com/api/posts`,
-            dataObject,
+            {
+                title: parentMessage.messages[0].text,
+                body: parentMessage.messages[0].text,
+                type: "question"
+            },
             {
                 headers: {
                     'Authorization': 'Bearer ' + schooldApiToken
