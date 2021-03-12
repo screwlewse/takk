@@ -20,9 +20,15 @@ app.get('/', (req, res) => {
 
 
 app.post('/bonusly', (req, res) => {
-    let payload = req.body.payload;
+    let payload = makeDataParseable(req.body.payload);
     console.log(payload);
-    let parsedUser = makeDataParseable(payload).message.user;
+    let parsedUser = payload.message.user;
+    if (payload.callback_id == 'bigBonusly') {
+        const parentMessageTS = payload.message.thread_ts || null;
+        const channel = payload.channel.id;
+        const parentMessage = getParentMessage(parentMessageTS, channel);
+        poseAQuestion(payload);
+    }
 
     axios.get(
         `https://slack.com/api/users.profile.get?user=${parsedUser}`,
@@ -59,7 +65,7 @@ app.post('/bonusly', (req, res) => {
             .then(function (response) {
                 let parsedData = makeDataParseable(response.data)
                 console.log("about to give a bonus to", parsedData.result[0]['username']);
-                giveBonus(parsedData.result[0]['username']);
+                // giveBonus(parsedData.result[0]['username']);
             })
             .catch(function (error) {
                 console.log(error);
@@ -89,6 +95,24 @@ app.post('/bonusly', (req, res) => {
     function poseAQuestion() {
 
     }
+
+    function getParentMessage(ts, channel) {
+        axios.get(
+            `https://slack.com/api/conversations.history?channel=${channel}&latest=${ts}&limit=1`,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + slackBotToken
+                }
+            }
+        )
+            .then(function (response) {
+                console.log(response.data, typeof (response.data));
+                return response
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    };
 
     function makeDataParseable(data) {
         if (typeof (data) == "string") {
