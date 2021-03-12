@@ -106,7 +106,7 @@ app.post('/bonusly', (req, res) => {
                 body: parentMessage.messages[0].text,
                 type: "question",
                 headers: {
-                    'Authorization': 'Bearer ' + slackBotToken
+                    'Authorization': 'Bearer ' + schooldApiToken
                 }
             }
         )
