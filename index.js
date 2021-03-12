@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 
 app.post('/bonusly', (req, res) => {
     let payload = makeDataParseable(req.body.payload);
-    // console.log(payload);
+    console.log("INITIAL PAYLOAD: ", payload);
     let parsedUser = payload.message.user;
     if (payload.callback_id == 'bigBonusly') {
         const ts = payload.message_ts || null;
@@ -111,13 +111,18 @@ app.post('/bonusly', (req, res) => {
             }
         )
             .then(function (response) {
-                console.log("POSTED A QUESTION", response.data);
+                // console.log("POSTED A QUESTION", response.data);
+                postAReply()
             })
             .catch(function (error) {
                 console.log("ERROR POSTING QUESTION: ", error)
             });
         // console.log("POSTAQUESTION: ", dataObject.title);
         // console.log("POSTAQUESTION: ", parentMessage.messages[0].text);
+    }
+
+    function postAReply() {
+        return
     }
 
     function getParentMessage(ts, channel, cb) {
