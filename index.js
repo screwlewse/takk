@@ -130,6 +130,7 @@ app.post('/bonusly', (req, res) => {
         axios.post(
             `https://takk-schoold.herokuapp.com/api/posts`,
             {
+                id: 1281337833373569024,
                 body: answerText,
                 type: "reply"
             },
