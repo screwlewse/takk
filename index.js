@@ -107,8 +107,11 @@ app.post('/bonusly', (req, res) => {
             }
         )
             .then(function (response) {
-                console.log(response.data);
+                console.log("POSTED A QUESTION", response.data);
             })
+            .catch(function (error) {
+                console.log("ERROR POSTING QUESTION: ", error)
+        })
     }
 
     function getParentMessage(ts, channel, cb) {
