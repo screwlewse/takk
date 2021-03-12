@@ -27,7 +27,8 @@ app.post('/bonusly', (req, res) => {
         const ts = payload.message_ts || null;
         const channel = payload.channel.id;
         const parentMessage = getParentMessage(ts, channel);
-        poseAQuestion(payload);
+        console.log(parentMessage)
+        postAQuestion(payload);
     }
 
     axios.get(
@@ -92,8 +93,14 @@ app.post('/bonusly', (req, res) => {
             });
     };
 
-    function poseAQuestion() {
-
+    function postAQuestion(questionText) {
+        return null
+        axios.post(
+            `http://takk-schoold.herokuapp.com/api/posts`,
+            {
+                title: questionText
+            }
+        )
     }
 
     function getParentMessage(ts, channel) {
@@ -106,7 +113,7 @@ app.post('/bonusly', (req, res) => {
             }
         )
             .then(function (response) {
-                console.log(response.data, typeof (response.data));
+                console.log("parentMessage", response.data, typeof (response.data));
                 return response
             })
             .catch(function (error) {
