@@ -30,9 +30,6 @@ app.post('/bonusly', (req, res) => {
         getParentMessage(ts, channel, function (parentMessage) {
             postAQuestion(parentMessage);
         });
-
-        // console.log(parentMessage)
-        // postAQuestion(parentMessage);
     }
 
     axios.get(
@@ -123,7 +120,7 @@ app.post('/bonusly', (req, res) => {
             `https://slack.com/api/conversations.history?channel=${channel}&latest=${ts}&limit=1`,
             {
                 headers: {
-                    'Authorization': 'Bearer ' + schooldApiToken
+                    'Authorization': 'Bearer ' + slackBotToken
                 }
             }
         )
