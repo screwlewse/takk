@@ -24,7 +24,7 @@ app.post('/bonusly', (req, res) => {
     console.log(payload);
     let parsedUser = payload.message.user;
     if (payload.callback_id == 'bigBonusly') {
-        const ts = payload.latest || null;
+        const ts = payload.message_ts || null;
         const channel = payload.channel.id;
         const parentMessage = getParentMessage(ts, channel);
         poseAQuestion(payload);
