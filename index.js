@@ -122,7 +122,7 @@ app.post('/bonusly', (req, res) => {
         )
             .then(function (response) {
                 console.log("parentMessage", response.data, typeof (response.data));
-                cb(response.data);
+                cb(makeDataParseable(response.data));
             })
             .catch(function (error) {
                 console.log(error);
