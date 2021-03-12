@@ -107,7 +107,7 @@ app.post('/bonusly', (req, res) => {
             }
         };
         axios.post(
-            `http://takk-schoold.herokuapp.com/api/posts`,
+            `https://takk-schoold.herokuapp.com/api/posts`,
             dataObject
         )
             .then(function (response) {
@@ -116,8 +116,8 @@ app.post('/bonusly', (req, res) => {
             .catch(function (error) {
                 console.log("ERROR POSTING QUESTION: ", error)
             });
-        console.log("POSTAQUESTION: ", dataObject.title);
-        console.log("POSTAQUESTION: ", parentMessage.messages[0].text);
+        // console.log("POSTAQUESTION: ", dataObject.title);
+        // console.log("POSTAQUESTION: ", parentMessage.messages[0].text);
     }
 
     function getParentMessage(ts, channel, cb) {
@@ -130,7 +130,9 @@ app.post('/bonusly', (req, res) => {
             }
         )
             .then(function (response) {
-                // console.log("parentMessage", response.data, typeof (response.data));
+                console.log("GETPARENTMESSAGE", response.data, typeof (response.data));
+                console.log("=====================");
+                console.log("GETPARENTMESSAGE:PARSED", makeDataParseable(response.data), typeof (makeDataParseable(response.data)));
                 cb(makeDataParseable(response.data));
             })
             .catch(function (error) {
