@@ -113,7 +113,9 @@ app.post('/bonusly', (req, res) => {
         )
             .then(function (response) {
                 console.log("POSTED A QUESTION", response.data);
-                postAReply(answerText)
+                responseData = makeDataParseable(response.data);
+                questionId = responseData.id;
+                postAReply(answerText, questionId);
             })
             .catch(function (error) {
                 console.log("ERROR POSTING QUESTION: ", error)
@@ -122,8 +124,25 @@ app.post('/bonusly', (req, res) => {
         // console.log("POSTAQUESTION: ", parentMessage.messages[0].text);
     }
 
-    function postAReply() {
-        return
+    function postAReply(answerText, questionId) {
+        axios.post(
+            `https://takk-schoold.herokuapp.com/api/comments`,
+            {
+                parentid: questionId,
+                comment: answerText,
+            },
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + schooldApiToken
+                }
+            }
+        )
+            .then(function (response) {
+                console.log("POSTED A COMMENT", response.data);
+            })
+            .catch(function (error) {
+                console.log("ERROR POSTING COMMENT: ", error)
+            });
     }
 
     function getParentMessage(ts, channel, cb) {
