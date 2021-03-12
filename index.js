@@ -22,13 +22,14 @@ app.get('/', (req, res) => {
 
 app.post('/bonusly', (req, res) => {
     let payload = makeDataParseable(req.body.payload);
-    console.log("INITIAL PAYLOAD: ", payload);
+    // console.log("INITIAL PAYLOAD: ", payload);
     let parsedUser = payload.message.user;
+    const answerText = payload.message.text;
     if (payload.callback_id == 'bigBonusly') {
         const ts = payload.message_ts || null;
         const channel = payload.channel.id;
         getParentMessage(ts, channel, function (parentMessage) {
-            postAQuestion(parentMessage);
+            postAQuestion(parentMessage, answerText);
         });
     }
 
@@ -94,7 +95,7 @@ app.post('/bonusly', (req, res) => {
             });
     };
 
-    function postAQuestion(parentMessage) {
+    function postAQuestion(parentMessage, answerText) {
         // console.log("POSTAQUESTION: ", parentMessage, typeof (parentMessage))
 
         axios.post(
@@ -111,8 +112,8 @@ app.post('/bonusly', (req, res) => {
             }
         )
             .then(function (response) {
-                // console.log("POSTED A QUESTION", response.data);
-                postAReply()
+                console.log("POSTED A QUESTION", response.data);
+                postAReply(answerText)
             })
             .catch(function (error) {
                 console.log("ERROR POSTING QUESTION: ", error)
