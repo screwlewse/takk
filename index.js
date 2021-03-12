@@ -88,24 +88,26 @@ app.post('/bonusly', (req, res) => {
             }
         )
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
             }, (error) => {
                 console.log(error);
             });
     };
 
     function postAQuestion(parentMessage) {
-        console.log("POSTAQUESTION: ", parentMessage, typeof (parentMessage))
+        // console.log("POSTAQUESTION: ", parentMessage, typeof (parentMessage))
+        const dataObject = {
+            title: parentMessage.messages[0].text,
+            body: parentMessage.messages[0].text,
+            type: "question",
+            headers: {
+                'Authorization': 'Bearer ' + schooldApiToken
+            }
+        }
+        console.log("POSTAQUESTION: ", dataObject);
         axios.post(
             `http://takk-schoold.herokuapp.com/api/posts`,
-            {
-                title: parentMessage.messages[0].text,
-                body: parentMessage.messages[0].text,
-                type: "question",
-                headers: {
-                    'Authorization': 'Bearer ' + schooldApiToken
-                }
-            }
+            dataObject
         )
             .then(function (response) {
                 console.log("POSTED A QUESTION", response.data);
@@ -125,7 +127,7 @@ app.post('/bonusly', (req, res) => {
             }
         )
             .then(function (response) {
-                console.log("parentMessage", response.data, typeof (response.data));
+                // console.log("parentMessage", response.data, typeof (response.data));
                 cb(makeDataParseable(response.data));
             })
             .catch(function (error) {
@@ -135,10 +137,10 @@ app.post('/bonusly', (req, res) => {
 
     function makeDataParseable(data) {
         if (typeof (data) == "string") {
-            console.log("parsing data", JSON.parse(data));
+            // console.log("parsing data", JSON.parse(data));
             return JSON.parse(data);
         } else {
-            console.log("unparsed data", data);
+            // console.log("unparsed data", data);
             return data;
         }
     };
