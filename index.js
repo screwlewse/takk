@@ -32,10 +32,11 @@ app.post('/bonusly', (req, res) => {
             }
         }
     )
-    .then(function (response) {
-        console.log(response);
+        .then(function (response) {
         body = makeDataParseable(response.data);
         console.log(response.data);
+            console.log("BODY");
+            console.log(body);
         var slackEmail = body.profile.email;
         if (slackEmail == 'davidg@surveymonkey.com') {
             slackEmail = 'dgregory@surveymonkey.com';
