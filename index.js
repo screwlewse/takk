@@ -104,7 +104,7 @@ app.post('/bonusly', (req, res) => {
             `https://takk-schoold.herokuapp.com/api/posts`,
             {
                 title: parentMessage.messages[0].text,
-                body: parentMessage.messages[0].text,
+                body: answerText,
                 type: "question"
             },
             {
@@ -117,7 +117,7 @@ app.post('/bonusly', (req, res) => {
                 console.log("POSTED A QUESTION", response.data);
                 responseData = makeDataParseable(response.data);
                 questionId = responseData.id;
-                postAReply(answerText, questionId);
+                // postAReply(answerText, questionId);
             })
             .catch(function (error) {
                 console.log("ERROR POSTING QUESTION: ", error)
@@ -130,7 +130,7 @@ app.post('/bonusly', (req, res) => {
         axios.post(
             `https://takk-schoold.herokuapp.com/api/posts`,
             {
-                id: 1281337833373569024,
+                title: `this is a reply: ${answerText}`,
                 body: answerText,
                 type: "reply"
             },
@@ -141,7 +141,7 @@ app.post('/bonusly', (req, res) => {
             }
         )
             .then(function (response) {
-                console.log("POSTED A COMMENT", response.data);
+                console.log("POSTED A COMMENT", response);
             })
             .catch(function (error) {
                 console.log("ERROR POSTING COMMENT: ", error)
