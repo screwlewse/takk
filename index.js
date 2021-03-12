@@ -32,19 +32,19 @@ app.post('/bonusly', (req, res) => {
             }
         }
     )
-        .then(function (response) {
-            console.log(response);
-            body = makeDataParseable(response.data);
-            console.log(repsonse.data);
-            var slackEmail = body.profile.email;
-            if (slackEmail == 'davidg@surveymonkey.com') {
+    .then(function (response) {
+        console.log(response);
+        body = makeDataParseable(response.data);
+        console.log(response.data);
+        var slackEmail = body.profile.email;
+        if (slackEmail == 'davidg@surveymonkey.com') {
             slackEmail = 'dgregory@surveymonkey.com';
         }
         findUserInBonusly(slackEmail);
     })
-        .catch(function (error) {
-            console.log(error);
-        })
+    .catch(function (error) {
+        console.log(error);
+    })
 
     res.end();
 
