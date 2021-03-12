@@ -81,8 +81,8 @@ app.post('/bonusly', (req, res) => {
         axios.post(
             'https://bonus.ly/api/v1/bonuses',
             {
-                "giver_email": "davidg@surveymonkey.com",
-                "reason": `+1 @${username} You're answer was top notch!  #makeithappen ![](https://bonusly-fog.s3.amazonaws.com/uploads/bonus_image/image/604ab409133ba30083fdff2e/EVUhyo0WAAMfcrN.jpg)`
+                "giver_email": "dgregory@surveymonkey.com",
+                "reason": `+1 @${username} Your answer was top notch!  #makeithappen ![](https://bonusly-fog.s3.amazonaws.com/uploads/bonus_image/image/604ab409133ba30083fdff2e/EVUhyo0WAAMfcrN.jpg)`
             },
             {
                 headers: {
