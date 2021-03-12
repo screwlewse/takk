@@ -76,9 +76,7 @@ app.post('/bonusly', (req, res) => {
         axios.post(
             'https://bonus.ly/api/v1/bonuses',
             {
-                body: {
-                    "reason": `+1 @${username} You're answer was top notch!  #makeithappen ![](https://bonusly-fog.s3.amazonaws.com/uploads/bonus_image/image/604ab409133ba30083fdff2e/EVUhyo0WAAMfcrN.jpg)`
-                }
+                "reason": `+1 @${username} You're answer was top notch!  #makeithappen ![](https://bonusly-fog.s3.amazonaws.com/uploads/bonus_image/image/604ab409133ba30083fdff2e/EVUhyo0WAAMfcrN.jpg)`
             },
             {
                 headers: {
