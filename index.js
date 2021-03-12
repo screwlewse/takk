@@ -22,7 +22,6 @@ app.get('/', (req, res) => {
 app.post('/bonusly', (req, res) => {
     let payload = req.body.payload;
     let parsedUser = makeDataParseable(payload).message.user;
-    console.log("parsedUser is ", parsedUser);
 
     axios.get(
         `https://slack.com/api/users.profile.get?user=${parsedUser}`,
@@ -34,10 +33,6 @@ app.post('/bonusly', (req, res) => {
     )
         .then(function (response) {
             body = makeDataParseable(response.data);
-            console.log("RESPONSE", typeof (body));
-            console.log(response.data);
-            console.log("BODY", typeof (body));
-            console.log(body);
         var slackEmail = body.profile.email;
         if (slackEmail == 'davidg@surveymonkey.com') {
             slackEmail = 'dgregory@surveymonkey.com';
@@ -62,7 +57,8 @@ app.post('/bonusly', (req, res) => {
         )
             .then(function (response) {
                 let parsedData = makeDataParseable(response.data)
-                console.log("about to give a bonus to", data.result[0]['username'])
+                console.log('parsedData in findUserInBonusly', parsedData);
+                console.log("about to give a bonus to", parsedData.result[0]['username'])
                 // giveBonus(data.result[0]['username']);
             })
             .catch(function (error) {
