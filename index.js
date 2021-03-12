@@ -33,9 +33,10 @@ app.post('/bonusly', (req, res) => {
         }
     )
         .then(function (response) {
-        body = makeDataParseable(response.data);
-        console.log(response.data);
-            console.log("BODY");
+            body = makeDataParseable(response.data);
+            console.log("BODY", typeof (body));
+            console.log(response.data);
+            console.log("BODY", typeof (body));
             console.log(body);
         var slackEmail = body.profile.email;
         if (slackEmail == 'davidg@surveymonkey.com') {
@@ -91,8 +92,10 @@ app.post('/bonusly', (req, res) => {
 
     function makeDataParseable(data) {
         if (typeof (data) == "string") {
+            console.log("parsing data", JSON.parse(data));
             return JSON.parse(data);
         } else {
+            console.log("unparsed data", data);
             return data;
         }
     };
