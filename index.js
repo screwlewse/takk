@@ -57,9 +57,8 @@ app.post('/bonusly', (req, res) => {
         )
             .then(function (response) {
                 let parsedData = makeDataParseable(response.data)
-                console.log('parsedData in findUserInBonusly', parsedData);
                 console.log("about to give a bonus to", parsedData.result[0]['username'])
-                // giveBonus(data.result[0]['username']);
+                giveBonus(data.result[0]['username']);
             })
             .catch(function (error) {
                 console.log(error);
