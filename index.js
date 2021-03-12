@@ -4,9 +4,8 @@ const bodyParser = require("body-parser");
 const request = require('request');
 const axios = require('axios');
 
-const slackWeb = new WebClient(process.env.SLACK_BOT_TOKEN);
-const userWeb = new WebClient(process.env.SLACK_USER_TOKEN);
-const appLevelWeb = new WebClient(process.env.SLACK_TAKK_APP_LEVEL_TOKEN);
+const slackBotToken = process.env.SLACK_BOT_TOKEN;
+// const userWeb = process.env.SLACK_USER_TOKEN;
 const bonuslyApiToken = process.env.BONUSLY_API_TOKEN;
 
 const app = express()
@@ -21,44 +20,32 @@ app.get('/', (req, res) => {
 
 
 app.post('/bonusly', (req, res) => {
-    (async () => {
-        let payload = req.body.payload;
-        let parsedUser = null;
+    let payload = req.body.payload;
+    let parsedUser = makeDataParseable(payload);
+    console.log(payload, parsedUser);
 
-        if (typeof(payload) === 'string'){
-            parsedUser = JSON.parse(req.body.payload).message.user;
-        } else {
-            parsedUser = req.body.payload.message.user;
-        }
-        console.log(payload, parsedUser);
-
-        const url = `https://slack.com/api/users.profile.get?user=${parsedUser}`;
-        console.info(url);
-
-        const options = {
-            url: url,
-            headers: { 
-                'Authorization': 'Bearer ' + process.env.SLACK_BOT_TOKEN
-            }
-        };
-
-        function callback(error, response, body) {
-            if (!error && response.statusCode == 200) {
-                console.log("callback", body, typeof(body));
-                var slackEmail = JSON.parse(body)['profile']['email'];
-                if(slackEmail == 'davidg@surveymonkey.com') {
-                    slackEmail = 'dgregory@surveymonkey.com';
-                }
-                findUserInBonusly(slackEmail);
-            }
-            else{
-                console.log(error);
+    axios.get(
+        `https://slack.com/api/users.profile.get?user=${parsedUser}`,
+        {
+            headers: {
+                'Authorization': 'Bearer ' + slackBotToken
             }
         }
+    )
+        .then(function (response) {
+            console.log(response);
+            body = makeDataParseable(response.data)
+            var slackEmail = body.profile.email;
+            if (slackEmail == 'davidg@surveymonkey.com') {
+            slackEmail = 'dgregory@surveymonkey.com';
+        }
+        findUserInBonusly(slackEmail);
+    })
+        .catch(function (error) {
+            console.log(error)
+        })
 
-        request(options, callback);
-        res.end();
-    })();
+    res.end();
 
     function findUserInBonusly(email) {
         console.log("email in findUserInBonusly", email);
@@ -72,6 +59,7 @@ app.post('/bonusly', (req, res) => {
         )
             .then(function (response) {
                 let parsedData = makeDataParseable(response.data)
+                console.log("about to give a bonus to", data.result[0]['username'])
                 // giveBonus(data.result[0]['username']);
             })
             .catch(function (error) {
@@ -79,17 +67,6 @@ app.post('/bonusly', (req, res) => {
                 return res.status(400).send({ "status": "error", "data": error })
             })
     }
-
-    // function findUserInBonusly(email) {
-    //     const options = {
-    //         url: `https://bonus.ly/api/v1/users?email=${email}`,
-    //         headers: {
-    //             'Authorization': 'Bearer ' + bonuslyApiToken
-    //         }
-    //     };
-    //     console.log("email in findUserInBonusly", email);
-    //     request(options, foundBonuslyUser);
-    // }
 
     function giveBonus(username) {
         axios.post(
@@ -110,16 +87,6 @@ app.post('/bonusly', (req, res) => {
             });
     };
 
-    // function foundBonuslyUser(error, response, body) {
-    //     if (!error && response.statusCode == 200) {
-    //         console.log("foundBonuslyUser", body, typeof (body));
-    //         giveBonus(JSON.parse(body).result[0]['username']);
-    //     }
-    //     else {
-    //         console.log(error);
-    //         return res.status(400).send({ "status": "error" })
-    //     }
-    // }
     function makeDataParseable(data) {
         if (typeof (data) == "string") {
             return JSON.parse(data);
