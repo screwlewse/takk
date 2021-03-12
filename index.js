@@ -94,6 +94,7 @@ app.post('/bonusly', (req, res) => {
     };
 
     function postAQuestion(parentMessage) {
+        console.log("POSTAQUESTION: ", parentMessage, typeof (parentMessage))
         axios.post(
             `http://takk-schoold.herokuapp.com/api/posts`,
             {
