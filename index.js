@@ -34,7 +34,8 @@ app.post('/bonusly', (req, res) => {
     )
         .then(function (response) {
             console.log(response);
-            body = makeDataParseable(response.data)
+            body = makeDataParseable(response.data);
+            console.log(repsonse.data);
             var slackEmail = body.profile.email;
             if (slackEmail == 'davidg@surveymonkey.com') {
             slackEmail = 'dgregory@surveymonkey.com';
@@ -42,7 +43,7 @@ app.post('/bonusly', (req, res) => {
         findUserInBonusly(slackEmail);
     })
         .catch(function (error) {
-            console.log(error)
+            console.log(error);
         })
 
     res.end();
