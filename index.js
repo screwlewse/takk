@@ -6,6 +6,7 @@ const axios = require('axios');
 
 const slackBotToken = process.env.SLACK_BOT_TOKEN;
 // const userWeb = process.env.SLACK_USER_TOKEN;
+const schooldApiToken = process.env.SCHOOLD_API_TOKEN;
 const bonuslyApiToken = process.env.BONUSLY_API_TOKEN;
 
 const app = express()
@@ -103,7 +104,10 @@ app.post('/bonusly', (req, res) => {
             {
                 title: parentMessage.messages[0].text,
                 body: parentMessage.messages[0].text,
-                type: "question"
+                type: "question",
+                headers: {
+                    'Authorization': 'Bearer ' + slackBotToken
+                }
             }
         )
             .then(function (response) {
@@ -119,7 +123,7 @@ app.post('/bonusly', (req, res) => {
             `https://slack.com/api/conversations.history?channel=${channel}&latest=${ts}&limit=1`,
             {
                 headers: {
-                    'Authorization': 'Bearer ' + slackBotToken
+                    'Authorization': 'Bearer ' + schooldApiToken
                 }
             }
         )
