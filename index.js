@@ -108,7 +108,7 @@ app.post('/bonusly', (req, res) => {
             }, (error) => {
                 console.log(error);
             });
-    }
+    };
 
     // function foundBonuslyUser(error, response, body) {
     //     if (!error && response.statusCode == 200) {
@@ -120,7 +120,7 @@ app.post('/bonusly', (req, res) => {
     //         return res.status(400).send({ "status": "error" })
     //     }
     // }
-    makeDataParseable(data) {
+    function makeDataParseable(data) {
         if (typeof (data) == "string") {
             return JSON.parse(data);
         } else {
