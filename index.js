@@ -128,9 +128,8 @@ app.post('/bonusly', (req, res) => {
 
     function postAReply(answerText, questionId) {
         axios.post(
-            `https://takk-schoold.herokuapp.com/api/post`,
+            `https://takk-schoold.herokuapp.com/api/posts`,
             {
-                title: `This is a reply: ${answerText}`,
                 body: answerText,
                 type: "reply"
             },
