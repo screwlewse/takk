@@ -26,9 +26,12 @@ app.post('/bonusly', (req, res) => {
     if (payload.callback_id == 'bigBonusly') {
         const ts = payload.message_ts || null;
         const channel = payload.channel.id;
-        const parentMessage = getParentMessage(ts, channel);
+        getParentMessage(ts, channel, function (parentMessage) {
+            postAQuestion(parentMessage);
+        });
+
         // console.log(parentMessage)
-        postAQuestion(parentMessage);
+        // postAQuestion(parentMessage);
     }
 
     axios.get(
@@ -108,7 +111,7 @@ app.post('/bonusly', (req, res) => {
             })
     }
 
-    function getParentMessage(ts, channel) {
+    function getParentMessage(ts, channel, cb) {
         axios.get(
             `https://slack.com/api/conversations.history?channel=${channel}&latest=${ts}&limit=1`,
             {
@@ -119,7 +122,7 @@ app.post('/bonusly', (req, res) => {
         )
             .then(function (response) {
                 console.log("parentMessage", response.data, typeof (response.data));
-                return makeDataParseable(response.data)
+                cb(response.data);
             })
             .catch(function (error) {
                 console.log(error);
