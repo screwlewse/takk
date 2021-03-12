@@ -21,8 +21,8 @@ app.get('/', (req, res) => {
 
 app.post('/bonusly', (req, res) => {
     let payload = req.body.payload;
-    let parsedUser = makeDataParseable(payload);
-    console.log(payload, parsedUser);
+    let parsedUser = makeDataParseable(payload).message.user;
+    console.log("parsedUser is ", parsedUser);
 
     axios.get(
         `https://slack.com/api/users.profile.get?user=${parsedUser}`,
@@ -34,7 +34,7 @@ app.post('/bonusly', (req, res) => {
     )
         .then(function (response) {
             body = makeDataParseable(response.data);
-            console.log("BODY", typeof (body));
+            console.log("RESPONSE", typeof (body));
             console.log(response.data);
             console.log("BODY", typeof (body));
             console.log(body);
