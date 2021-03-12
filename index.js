@@ -29,7 +29,7 @@ app.post('/bonusly', (req, res) => {
         const channel = payload.channel.id;
         getParentMessage(ts, channel, function (parentMessage) {
             console.log("=====PARENTMESSAGE=====");
-            console.log(parentMessage.latest, "&&&&&", parentMessage.messages);
+            console.log(parentMessage.latest, "&&&&&", parentMessage.messages[0]);
             // postAQuestion(parentMessage);
         });
     }
