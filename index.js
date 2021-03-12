@@ -57,36 +57,8 @@ app.post('/bonusly', (req, res) => {
         }
 
         request(options, callback);
-
-        /*
-        const user = await userWeb.users.profile.get({
-            id: parsedUser.user
-        });
-        console.log("user", user, typeof(user));
-        console.info("--------------")
-        const user2 = await slackWeb.users.profile.get({
-            id: parsedUser.user
-        });
-        
-        console.log("user2", user2, typeof(user2));
-        
-        var slackEmail = user.profile.email;
-        if (slackEmail == 'davidg@surveymonkey.com') {
-            slackEmail = 'dgregory@surveymonkey.com';
-        }
-        findUserInBonusly(slackEmail);
-        */
         res.end();
     })();
-
-
-
-
-
-    // console.log(req.body);
-    // const fromUser = req.body.message.user;
-
-
 
     function findUserInBonusly(email) {
         const options = {
@@ -99,28 +71,23 @@ app.post('/bonusly', (req, res) => {
         request(options, foundBonuslyUser);
     }
 
-    // function giveBonus(username) {
-    //     const options = {
-    //         url: `https://bonus.ly/api/v1/bonuses`,
-    //         headers: {
-    //             'Authorization': 'Bearer abbfd9c173805a12738a11f521b1a155'
-    //         },
-    //         body: {
-    //             "reason": `+0 @${username} #trusttheteam`,
-    //         }
-    //     };
-
-    //     request.post(options)
-    // }
+    function giveBonus(username) {
+        const options = {
+            url: `https://bonus.ly/api/v1/bonuses`,
+            headers: {
+                'Authorization': 'Bearer ' + bonuslyApiToken
+            },
+            body: {
+                "reason": `+1 @${username} You're answer was top notch!  #makeithappen ![](https://bonusly-fog.s3.amazonaws.com/uploads/bonus_image/image/604ab409133ba30083fdff2e/EVUhyo0WAAMfcrN.jpg)`
+            }
+        };
+        request.post(options)
+    }
 
     function foundBonuslyUser(error, response, body) {
         if (!error && response.statusCode == 200) {
-            console.log("foundBonuslyUser", body, typeof(body));
-            // giveBonus(bonuslyUser.result[0]['username'])
-            // console.log("=====RES======")
-            // console.log(res)
-            // console.log("=====RESPONSE======")
-            // console.log(response)
+            console.log("foundBonuslyUser", body, typeof (body));
+            giveBonus(JSON.parse(body).result[0]['username']);
         }
         else {
             console.log(error);
@@ -128,7 +95,6 @@ app.post('/bonusly', (req, res) => {
         }
     }
 
-    // request(options, callback);
 })
 
 
