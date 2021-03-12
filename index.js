@@ -68,7 +68,7 @@ app.post('/bonusly', (req, res) => {
             .then(function (response) {
                 let parsedData = makeDataParseable(response.data)
                 console.log("about to give a bonus to", parsedData.result[0]['username']);
-                giveBonus(parsedData.result[0]['username']);
+                giveBonus(parsedData.result[0]['username'], email);
             })
             .catch(function (error) {
                 console.log(error);
@@ -76,11 +76,11 @@ app.post('/bonusly', (req, res) => {
             })
     }
 
-    function giveBonus(username) {
+    function giveBonus(username, email) {
         axios.post(
             'https://bonus.ly/api/v1/bonuses',
             {
-                "giver_email": "dhanas@surveymonkey.com",
+                "giver_email": email,
                 "reason": `+1 @${username} You're answer was top notch!  #makeithappen ![](https://bonusly-fog.s3.amazonaws.com/uploads/bonus_image/image/604ab409133ba30083fdff2e/EVUhyo0WAAMfcrN.jpg)`
             },
             {
